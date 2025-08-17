@@ -1,24 +1,21 @@
 import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-setupCounter(document.querySelector('#counter'))
+async function loadUsers() {
+  const res = await fetch(`${backendUrl}/api/puzzles`);
+  console.log(`${backendUrl}/api/puzzles`)
+  const data = await res.json();
+
+  const list = document.getElementById("puzzlesList");
+  list.innerHTML = "";
+
+  data.forEach(puzzle => {
+    const li = document.createElement("li");
+    li.textContent = puzzle.fen;   // assuming "users" has "name"
+    list.appendChild(li);
+  });
+}
+
+document.getElementById("loadPuzzles").addEventListener("click", loadUsers);
+

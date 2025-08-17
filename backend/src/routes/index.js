@@ -3,6 +3,6 @@ import puzzlesController from "../controller/puzzlesController.js";
 
 const router = Router();
 
-router.get("/puzzles", puzzlesController.getAllUsers);
+router.get("/puzzles", puzzlesController.getAllPuzzles);
 
 export default router;
